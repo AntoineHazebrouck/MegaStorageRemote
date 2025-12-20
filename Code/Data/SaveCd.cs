@@ -3,18 +3,15 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using Android.Content;
+using MegaStorageRemote.Code.Utils;
 
-namespace MegaStorageRemote.Code;
+namespace MegaStorageRemote.Code.Data;
 
 public class SaveCd
 {
     public static Cd Save(Cd cd)
     {
-        var prefs =
-            Application.Context.GetSharedPreferences(
-                "MegaStorageRemoteData",
-                FileCreationMode.Private
-            ) ?? throw new InvalidOperationException("Could not retrieve ISharedPreferences");
+        var prefs = AndroidUtils.Preferences();
 
         var editor =
             prefs.Edit()
@@ -31,10 +28,6 @@ public class SaveCd
             prefs.GetString(cd.Position.ToString(), null)
             ?? throw new InvalidOperationException("Could not save the CD");
 
-        return JsonSerializer.Deserialize(saved, JsonContext.Default.Cd)
-            ?? throw new InvalidOperationException("Could not deserialize the CD");
+        return JsonUtils.Parse(saved);
     }
 }
-
-[JsonSerializable(typeof(Cd))]
-internal partial class JsonContext : JsonSerializerContext { }

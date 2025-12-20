@@ -3,8 +3,9 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using MegaStorageRemote.Code.Data;
 
-namespace MegaStorageRemote.Code;
+namespace MegaStorageRemote.Code.Presentation;
 
 [Activity(Label = "Add a new CD")]
 public class AddCdForm : Activity

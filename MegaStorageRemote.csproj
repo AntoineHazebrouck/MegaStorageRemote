@@ -15,9 +15,6 @@
     -->
     <TrimMode>full</TrimMode>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Code\" />
-  </ItemGroup>
 
   <PropertyGroup>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
