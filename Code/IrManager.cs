@@ -47,7 +47,7 @@ public class IrManager(ConsumerIrManager ir)
         Send(pattern);
     }
 
-    public void PlayDisc(int number)
+    public void PlayCd(int number)
     {
         if (number < 1 || number > 300)
             throw new ArgumentException("number has to be between 1 and 300");

@@ -20,3 +20,7 @@ ssh antoine@raspberrypi
 ```shell
 sudo ir-ctl -r -d /dev/lirc0
 ```
+
+# Running the app
+
+The application is specifically designed for infrared capable phones.
