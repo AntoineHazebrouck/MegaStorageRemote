@@ -1,6 +1,7 @@
 using Android.Content;
 using Android.Hardware;
 using Android.Views;
+using Android.Widget;
 using MegaStorageRemote.Code;
 using MegaStorageRemote.Code.Data;
 using MegaStorageRemote.Code.Presentation;
@@ -10,6 +11,8 @@ namespace MegaStorageRemote;
 [Activity(Label = "@string/app_name", MainLauncher = true)]
 public class MainActivity : Activity
 {
+    private ListView? cds;
+
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
@@ -43,7 +46,7 @@ public class MainActivity : Activity
             .build();
 
         var data = ReadCds.Read();
-        var cds = new ListView(this)
+        cds = new ListView(this)
         {
             Adapter = new CdAdapter(this, data),
             LayoutParameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, 0)
@@ -52,16 +55,20 @@ public class MainActivity : Activity
             },
             Divider = null,
         };
-
         cds.ItemClick += (s, e) =>
         {
             Toast.MakeText(this, $"Selected : {data[e.Position]}", ToastLength.Short)?.Show();
-            // var item = data[e.Position];
-            // Toast.MakeText(this, $"Selected: {item.Name}", ToastLength.Short).Show();
         };
 
         layout.AddView(cds);
-
         SetContentView(layout);
+    }
+
+    protected override void OnResume()
+    {
+        base.OnResume();
+
+        var fresh = ReadCds.Read();
+        cds?.Adapter = new CdAdapter(this, fresh);
     }
 }
