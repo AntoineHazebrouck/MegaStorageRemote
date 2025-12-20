@@ -5,6 +5,7 @@ using Android.Widget;
 using MegaStorageRemote.Code;
 using MegaStorageRemote.Code.Data;
 using MegaStorageRemote.Code.Presentation;
+using MegaStorageRemote.Code.Utils;
 
 namespace MegaStorageRemote;
 
@@ -17,9 +18,7 @@ public class MainActivity : Activity
     {
         base.OnCreate(savedInstanceState);
 
-        if (GetSystemService(ConsumerIrService) is not ConsumerIrManager ir)
-            throw new InvalidOperationException("Could not retrieve the infrared emmitter");
-        var irManager = new IrManager(ir);
+        var irManager = AndroidUtils.Infrared(this);
 
         var layout = new LayoutBuilder(this)
             .AddButton(
@@ -27,13 +26,6 @@ public class MainActivity : Activity
                 (sender, e) =>
                 {
                     irManager.Power();
-                }
-            )
-            .AddButton(
-                "Play cd 12",
-                (sender, e) =>
-                {
-                    irManager.PlayCd(12);
                 }
             )
             .AddButton(
@@ -54,10 +46,6 @@ public class MainActivity : Activity
                 Weight = 1f,
             },
             Divider = null,
-        };
-        cds.ItemClick += (s, e) =>
-        {
-            Toast.MakeText(this, $"Selected : {data[e.Position]}", ToastLength.Short)?.Show();
         };
 
         layout.AddView(cds);

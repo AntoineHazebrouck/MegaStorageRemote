@@ -6,6 +6,7 @@ using Android.OS;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using MegaStorageRemote.Code.Utils;
 
 namespace MegaStorageRemote.Code.Presentation;
 
@@ -39,6 +40,9 @@ public class CdCard : FrameLayout
             },
         };
 
+        var play = PlayButton(context, cd);
+        container.AddView(play);
+
         TextView artistLabel = ArtistLabel(context, cd);
         col.AddView(artistLabel);
 
@@ -51,6 +55,31 @@ public class CdCard : FrameLayout
         container.AddView(positionLabel);
 
         AddView(container);
+    }
+
+    private ImageButton PlayButton(Context context, Cd cd)
+    {
+        var button = new ImageButton(context);
+        var layoutParams = new LayoutParams(
+            ViewGroup.LayoutParams.WrapContent,
+            ViewGroup.LayoutParams.WrapContent
+        )
+        {
+            Gravity = GravityFlags.CenterVertical,
+        };
+        layoutParams.SetMargins(20, 0, 20, 0);
+        button.LayoutParameters = layoutParams;
+
+        button.SetImageResource(Android.Resource.Drawable.IcMediaPlay);
+        button.SetScaleType(ImageView.ScaleType.CenterInside);
+
+        button.Click += (s, e) =>
+        {
+            var infrared = AndroidUtils.Infrared(context);
+            infrared.PlayCd(cd.Position);
+        };
+
+        return button;
     }
 
     private static TextView ArtistLabel(Context context, Cd cd)
