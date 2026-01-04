@@ -48,7 +48,7 @@ I first tried with simple commands (power on/off, numbers, ...). Then I started 
 
 I chose to go for a 100% code approach so that I would not bother learning complicated stuff for such basic needs. 
 
-I did not overcomplicate thing as the perimeter of the project is small and very predictable since it is limited to the hardware capabilities. The storage is 100% local to the phone, it avoids spending money on a server.
+I did not overcomplicate thing as the perimeter of the project is small and very predictable since it is limited to the hardware capabilities. For that same reason, there are no automated tests, plus it is also impossible to assert proper IR transmitting programmatically. The storage is 100% local to the phone, it avoids spending money on a server.
 
 ## Features
 
